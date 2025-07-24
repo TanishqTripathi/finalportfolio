@@ -17,4 +17,4 @@ EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
 
 # # In your Dockerfile, near other COPY commands
-# COPY tidb-ca.pem /app/tidb-ca.pem
+COPY tidb-ca.pem /app/tidb-ca.pems
