@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>About | Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
+            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+            overflow-x: hidden;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+        }
+        .profile-pic {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #00bcd4;
+        }
+        a.social-link {
+            color: #00bcd4;
+            text-decoration: none;
+        }
+        a.social-link:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+        .navbar {
+            background-color: #000;
+        }
+        .typewriter h4 {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid #00bcd4;
+            animation: typing 4s steps(40, end), blink 0.75s step-end infinite;
+        }
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+        .skill-icon {
+            font-size: 2rem;
+            color: #00bcd4;
+        }
+        .timeline {
+            border-left: 2px solid #00bcd4;
+            padding-left: 20px;
+            margin-top: 40px;
+        }
+        .timeline h6 {
+            margin-bottom: 0;
+        }
+        .timeline .event {
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        .text-muted {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="/view/home">Tanishq Kumar Tripathi</a>
+    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="/view/Home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="/view/About">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="/view/projects">Projects</a></li>
+        <li class="nav-item"><a class="nav-link" href="/view/Resume">Resume</a></li>
+        <li class="nav-item"><a class="nav-link" href="/view/Contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Main About Section -->
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 glass-card text-center">
+            <img src="https://avatars.githubusercontent.com/u/139325712?v=4" alt="Tanishq Tripathi" class="profile-pic mb-3">
+            <h2 class="mb-0">Tanishq Kumar Tripathi</h2>
+            <div class="typewriter mb-4">
+                <h4>Developer | Data Analyst | Tech Enthusiast</h4>
+            </div>
+            <p class="mb-4">👋 I'm a passionate full-stack developer with a knack for building web apps, dashboards, and machine learning projects. I blend design with logic and create value-driven solutions using Java, Python, Spring Boot, and more.</p>
+
+            <!-- Social Links -->
+            <div class="mb-4">
+                <a class="social-link d-block mb-2" href="https://www.linkedin.com/in/tanishqkumartripathi/" target="_blank">
+                    <i class="bi bi-linkedin me-2"></i>LinkedIn
+                </a>
+                <a class="social-link d-block mb-2" href="https://github.com/TanishqTripathi" target="_blank">
+                    <i class="bi bi-github me-2"></i>GitHub
+                </a>
+                <a class="social-link d-block mb-2" href="https://www.geeksforgeeks.org/user/tanishqkumartripathi1110/" target="_blank">
+                    <i class="bi bi-code-slash me-2"></i>GeeksforGeeks
+                </a>
+                <a class="social-link d-block" href="mailto:tanishqkumartripathi1110@gmail.com">
+                    <i class="bi bi-envelope-fill me-2"></i>Email Me
+                </a>
+            </div>
+
+            <!-- Skills Section -->
+            <h5 class="mb-3 mt-4">💻 Tech Stack</h5>
+            <div class="row text-center g-3">
+                <div class="col-4 col-md-3"><i class="bi bi-code-slash skill-icon"></i><div>Java</div></div>
+                <div class="col-4 col-md-3"><i class="bi bi-filetype-py skill-icon"></i><div>Python</div></div>
+                <div class="col-4 col-md-3"><i class="bi bi-cpu skill-icon"></i><div>Artificial Intelligence</div></div>
+                <div class="col-4 col-md-3"><i class="bi bi-bar-chart-line skill-icon"></i><div>Data Science</div></div>
+                <div class="col-4 col-md-3"><i class="bi bi-hdd-network skill-icon"></i><div>Backend Development</div></div>
+                <div class="col-4 col-md-3"><i class="bi bi-graph-up-arrow skill-icon"></i><div>Data Analysis</div></div>
+                <div class="col-4 col-md-3"><i class="bi bi-database skill-icon"></i><div>MySQL</div></div>
+                <div class="col-4 col-md-3"><i class="bi bi-bar-chart-line-fill skill-icon"></i><div>Power BI</div></div>
+                <div class="col-4 col-md-3"><i class="bi bi-diagram-3-fill skill-icon"></i><div>Spring Boot</div></div>
+                <div class="col-4 col-md-3"><i class="bi bi-git skill-icon"></i><div>Git</div></div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="timeline mt-5 text-start">
+                <div class="event">
+                    <h6>🎓 2024 — Completed B.Tech in Computer Science</h6>
+                    <p class="text-muted">Specialized in software development and data science.</p>
+                </div>
+                <div class="event">
+                    <h6>🚀 Built 15+ Projects</h6>
+                    <p class="text-muted">Deployed multiple live apps, dashboards, and ML solutions.</p>
+                </div>
+                <div class="event">
+                    <h6>📊 Created multiple Power BI dashboards</h6>
+                    <p class="text-muted">Used in real-world case studies like MSD, Ola, and Healthcare.</p>
+                </div>
+                <div class="event">
+                    <h6>📚 Constant Learner</h6>
+                    <p class="text-muted">Always exploring new tech, contributing to GitHub and GFG.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

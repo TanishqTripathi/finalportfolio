@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Projects | Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .card {
+            background-color: #1e1e1e;
+            border: none;
+            color: #ddd;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            background-color: #2a2a2a;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        .btn-outline-light:hover {
+            background-color: #f8f9fa;
+            color: #000;
+        }
+        .badge-hosted {
+            background-color: #28a745;
+        }
+        .badge-not-hosted {
+            background-color: #dc3545;
+        }
+        #searchInput {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            color: #fff;
+        }
+        #searchInput::placeholder {
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="/view/home">Tanishq Kumar Tripathi</a>
+    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="/view/Home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="/view/About">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="/view/projects">Projects</a></li>
+        <li class="nav-item"><a class="nav-link" href="/view/Resume">Resume</a></li>
+        <li class="nav-item"><a class="nav-link" href="/view/Contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Projects Section -->
+<div class="container py-5">
+    <h2 class="text-center mb-5">✨ My Projects</h2>
+
+    <!-- Search and Sort -->
+    <div class="row mb-4 justify-content-between align-items-center">
+        <div class="col-md-6">
+            <input type="text" id="searchInput" class="form-control text-white" placeholder="🔍 Search projects..." onkeyup="filterProjects()">
+        </div>
+        <div class="col-md-4 text-end">
+            <select class="form-select bg-dark text-white border-secondary" id="sortSelect" onchange="sortProjects()">
+                <option value="title">Sort by Title</option>
+                <option value="likes">Sort by Likes</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row g-4" id="projectsContainer">
+        <div class="col-md-4" th:each="project : ${projects}" th:attr="data-title=${project.title}, data-likes=${project.likes}">
+            <div class="card h-100 shadow-sm">
+                <img th:src="${project.imageUrl}" class="card-img-top" alt="Project Image" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title d-flex justify-content-between align-items-center">
+                        <span th:text="${project.title}">Project Title</span>
+                        <span class="badge"
+                              th:classappend="${project.livedemolink != null && !#strings.isEmpty(project.livedemolink)} ? 'badge-hosted' : 'badge-not-hosted'"
+                              th:text="${project.livedemolink != null && !#strings.isEmpty(project.livedemolink)} ? 'Hosted' : 'Not Hosted'">
+                        </span>
+                    </h5>
+                    <p class="card-text" th:text="${project.description}">Project Description</p>
+                </div>
+                <div class="card-footer d-flex justify-content-between align-items-center border-0 bg-transparent">
+                    <a th:href="${project.github}" class="btn btn-outline-light btn-sm" target="_blank">GitHub</a>
+                    <a th:href="${project.livedemolink}" class="btn btn-outline-primary btn-sm" target="_blank"
+                       th:if="${project.livedemolink != null && !#strings.isEmpty(project.livedemolink)}">Live</a>
+                    <button class="btn btn-sm btn-success" th:onclick="'likeProject(' + ${project.id} + ')'" th:id="'likeBtn-' + ${project.id}">
+                        <i class="bi bi-hand-thumbs-up-fill"></i>
+                        <span th:text="${project.likes}">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function likeProject(projectId) {
+    fetch(`/api/projects/${projectId}/like`, { method: 'PUT' })
+        .then(() => {
+            const likeBtn = document.getElementById(`likeBtn-${projectId}`);
+            const count = likeBtn.querySelector("span");
+            count.textContent = parseInt(count.textContent) + 1;
+        })
+        .catch(error => console.error('Error liking project:', error));
+}
+
+function filterProjects() {
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    const cards = document.querySelectorAll('#projectsContainer .col-md-4');
+    cards.forEach(card => {
+        const title = card.getAttribute('data-title').toLowerCase();
+        card.style.display = title.includes(input) ? '' : 'none';
+    });
+}
+
+function sortProjects() {
+    const sortType = document.getElementById('sortSelect').value;
+    const container = document.getElementById('projectsContainer');
+    const cards = Array.from(container.children);
+
+    cards.sort((a, b) => {
+        if (sortType === 'title') {
+            return a.getAttribute('data-title').localeCompare(b.getAttribute('data-title'));
+        } else if (sortType === 'likes') {
+            return b.getAttribute('data-likes') - a.getAttribute('data-likes');
+        }
+    });
+
+    cards.forEach(card => container.appendChild(card));
+}
+</script>
+
+</body>
+</html>
