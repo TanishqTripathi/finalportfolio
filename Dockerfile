@@ -1,21 +1,20 @@
-# Start from a lightweight JDK image
-FROM eclipse-temurin:21-jdk-alpine
+# ----------- STAGE 1: Build the app -------------
+FROM maven:3.9.6-eclipse-temurin-21 AS build
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
 
-# Set working directory inside container
+# ----------- STAGE 2: Run the app ----------------
+FROM eclipse-temurin:21-jdk-alpine
 WORKDIR /app
 
-# Copy the built jar into the container
-COPY target/website-0.0.1-SNAPSHOT.jar app.jar
+# Copy the built JAR from the previous stage
+COPY --from=build /app/target/website-0.0.1-SNAPSHOT.jar app.jar
 
-# # In your Dockerfile, near other COPY commands
+# Copy the TiDB CA certificate if needed
 COPY src/main/resources/tidb-ca.pem /app/tidb-ca.pem
 
-# Optional: copy .env (for debug only – not needed in container runtime)
-# COPY .env .env
-
-# Expose port used by Spring Boot (default 8080)
 EXPOSE 8080
-
-# Start the Spring Boot app
 ENTRYPOINT ["java", "-jar", "app.jar"]
 
