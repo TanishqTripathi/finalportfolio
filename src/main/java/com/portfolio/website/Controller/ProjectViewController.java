@@ -21,7 +21,7 @@ public class ProjectViewController {
     }
 
     @GetMapping("/")
-    public String indexView() {
+    public String IndexView() {
         return "Home"; // file: index.html
     }
 
