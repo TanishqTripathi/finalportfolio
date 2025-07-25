@@ -7,6 +7,9 @@ WORKDIR /app
 # Copy the built jar into the container
 COPY target/website-0.0.1-SNAPSHOT.jar app.jar
 
+# # In your Dockerfile, near other COPY commands
+COPY src/main/resources/tidb-ca.pem /app/tidb-ca.pem
+
 # Optional: copy .env (for debug only – not needed in container runtime)
 # COPY .env .env
 
@@ -16,5 +19,3 @@ EXPOSE 8080
 # Start the Spring Boot app
 ENTRYPOINT ["java", "-jar", "app.jar"]
 
-# # In your Dockerfile, near other COPY commands
-COPY tidb-ca.pem /app/tidb-ca.pems
