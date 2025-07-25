@@ -20,9 +20,9 @@ public class ProjectViewController {
         return "Projects";
     }
 
-    @GetMapping("/")
+    @GetMapping({ "", "/" })
     public String IndexView() {
-        return "Home"; // file: index.html
+        return "Home";
     }
 
     @GetMapping("/Home")
